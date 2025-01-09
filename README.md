@@ -6,7 +6,7 @@ This project is an attempt to reproduce pixel art in the PC game "devast.io".
 
 ### Core Idea
 
-In "devast.io," players can place objects on a grid-based map.
+In "devast.io", players can place objects on a grid-based map.
 Among these objects, there are half-blocks and items that can be rotated 90 degrees,
 effectively allowing a single object to represent four distinct pixels.
 Additionally, there are larger items that span three grid spaces.
