@@ -18,6 +18,7 @@ Using an algorithm to solve this problem, the goal is to create pixel art design
 This project leverages the following technologies:
 
 - **JavaScript**: The primary language used for development.
+- **jQuery**: A fast and simple JavaScript library for DOM manipulation and event handling.
 - **Volta**: A tool manager to ensure consistent Node.js and npm environments.
 - **pnpm**: A fast and efficient package manager.
 - **ESLint**: Helps maintain code quality and enforce coding standards.
