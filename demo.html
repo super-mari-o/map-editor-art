@@ -7,6 +7,7 @@
 	</head>
 	<body>
 		<h1>Devast.io MAP-EDITOR Assets DEMO</h1>
+		<dl id="demo_holder"></dl>
 	</body>
 	<script
 		src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
@@ -18,15 +19,15 @@
 		fetch('https://super-mari-o.github.io/map-editor-art/data/map-editor.yml')
 			.then((res) => res.text())
 			.then((str) => {
+				$(demo_holder).empty();
 				str
 					.trim()
 					.split('\n')
 					.map((v) => v.split(': '))
 					.forEach(([ymlKey, imgUrl]) => {
-						$('<dt>').appendTo(dl).text(ymlKey);
-						$('<dd>')
-							.appendTo(dl)
-							.append(Object.assign(new Image(), { src: imgUrl, alt: ymlKey }));
+						$('<dt>').appendTo(demo_holder).text(ymlKey);
+						const dd = $('<dd>').appendTo(demo_holder);
+						dd.append(Object.assign(new Image(), { src: imgUrl, alt: ymlKey }));
 					});
 			});
 	</script>
