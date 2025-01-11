@@ -33,14 +33,11 @@
 			for (const [ymlKey, imgUrl] of ymlArray) {
 				$('<dt>').appendTo(demo_holder).text(ymlKey);
 				const dd = $('<dd>').appendTo(demo_holder);
-				const MIN_WIDTH = 170;
-				const MAX_WIDTH = 300;
 				const response = await fetch(imgUrl);
-				const blob = await response.blob();
-				const localUrl = URL.createObjectURL(blob);
 				const img = Object.assign(new Image(), {
-					src: localUrl,
+					src: imgUrl,
 					alt: ymlKey,
+					crossOrigin: 'anonymous',
 					onload: (elm) => {
 						const canvas = document.createElement('canvas');
 						const ctx = canvas.getContext('2d');
@@ -78,6 +75,8 @@
 							.css({
 								color: 'blue',
 							});
+						const MIN_WIDTH = 150;
+						const MAX_WIDTH = 300;
 						if (
 							pureWidth < MIN_WIDTH ||
 							pureWidth > MAX_WIDTH ||
