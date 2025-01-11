@@ -72,14 +72,23 @@
 						}
 						pureWidth = maxX - minX + 1;
 						pureHeight = maxY - minY + 1;
-						dd.append(`<p>Size: ${pureWidth}x${pureHeight}</p>`);
+						$('<div>')
+							.appendTo(dd)
+							.text(`Size: ${pureWidth}x${pureHeight}`)
+							.css({
+								color: 'blue',
+							});
 						if (
 							pureWidth < MIN_WIDTH ||
 							pureWidth > MAX_WIDTH ||
 							pureHeight < MIN_WIDTH ||
 							pureHeight > MAX_WIDTH
 						) {
-							dd.append('Invalid size');
+							$('<div>').appendTo(dd).text('Invalid size').css({
+								color: 'red',
+								'font-weight': 'bold',
+								'background-color': 'pink',
+							});
 						} else {
 							dd.append(img);
 						}
