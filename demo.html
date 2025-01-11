@@ -15,20 +15,21 @@
 		crossorigin="anonymous"
 	></script>
 	<script defer>
-		const dl = $('<dl>').appendTo('body');
-		fetch('https://super-mari-o.github.io/map-editor-art/data/map-editor.yml')
-			.then((res) => res.text())
-			.then((str) => {
-				$(demo_holder).empty();
-				str
-					.trim()
-					.split('\n')
-					.map((v) => v.split(': '))
-					.forEach(([ymlKey, imgUrl]) => {
-						$('<dt>').appendTo(demo_holder).text(ymlKey);
-						const dd = $('<dd>').appendTo(demo_holder);
-						dd.append(Object.assign(new Image(), { src: imgUrl, alt: ymlKey }));
-					});
-			});
+		$(demo_holder).empty();
+		(async () => {
+			const res = await fetch(
+				'https://super-mari-o.github.io/map-editor-art/data/map-editor.yml',
+			);
+			const str = await res.text();
+			const ymlArray = str
+				.trim()
+				.split('\n')
+				.map((v) => v.split(': '));
+			for (const [ymlKey, imgUrl] of ymlArray) {
+				$('<dt>').appendTo(demo_holder).text(ymlKey);
+				const dd = $('<dd>').appendTo(demo_holder);
+				dd.append(Object.assign(new Image(), { src: imgUrl, alt: ymlKey }));
+			}
+		})();
 	</script>
 </html>
