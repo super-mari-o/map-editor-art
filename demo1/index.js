@@ -1,3 +1,4 @@
+const { $, demo_holder } = window;
 $(demo_holder).empty();
 (async () => {
 	const res = await fetch(
