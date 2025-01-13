@@ -13,6 +13,11 @@ Additionally, there are larger items that span three grid spaces.
 By treating these game assets as pieces of a puzzle, the project formulates the placement process as an optimization problem.
 Using an algorithm to solve this problem, the goal is to create pixel art designs on the game's map.
 
+## Demo
+
+- [Demo1](https://super-mari-o.github.io/map-editor-art/demo1/index.html)
+- [Demo2](https://super-mari-o.github.io/map-editor-art/demo2/index.html)
+
 ## Technologies Used
 
 This project leverages the following technologies:
