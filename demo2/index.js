@@ -10,10 +10,18 @@ const measurePureSize = ({ rgbaArray, width, height }) => {
 		const y = (i / 4 / width) | 0;
 		const a = rgbaArray[i + 3];
 		if (a > 0) {
-			if (x < minX) minX = x;
-			if (x > maxX) maxX = x;
-			if (y < minY) minY = y;
-			if (y > maxY) maxY = y;
+			if (x < minX) {
+				minX = x;
+			}
+			if (x > maxX) {
+				maxX = x;
+			}
+			if (y < minY) {
+				minY = y;
+			}
+			if (y > maxY) {
+				maxY = y;
+			}
 		}
 	}
 	const pureWidth = maxX - minX + 1;
@@ -54,6 +62,29 @@ const calcRepresentativeColor = ({ rgbaArray }) => {
 	]
 		.map((v) => (v | 0).toString(16).padStart(2, "0"))
 		.join("")}`;
+};
+const regExpWallPng = /-wall[0-9]*.png/;
+const regExpRoadPng = /day-road[0-9]*.png/;
+const regExpRoad9Png = /day-road9.png/;
+const validate = ({ pureWidth, pureHeight, coloredRatio, imgUrl }) => {
+	const minWidth = 165;
+	const maxWidth = 250;
+	let errorMessage = null;
+	if (
+		pureWidth < minWidth ||
+		pureWidth > maxWidth ||
+		pureHeight < minWidth ||
+		pureHeight > maxWidth
+	) {
+		errorMessage = "Invalid size";
+	} else if (coloredRatio < 0.7) {
+		errorMessage = "Low color ratio";
+	} else if (regExpWallPng.test(imgUrl)) {
+		errorMessage = "Wall";
+	} else if (regExpRoadPng.test(imgUrl) && !regExpRoad9Png.test(imgUrl)) {
+		errorMessage = "Road";
+	}
+	return errorMessage;
 };
 (async () => {
 	const res = await fetch(
@@ -108,26 +139,12 @@ const calcRepresentativeColor = ({ rgbaArray }) => {
 					.css({
 						color: "green",
 					});
-				const MIN_WIDTH = 165;
-				const MAX_WIDTH = 250;
-				let errorMessage = null;
-				if (
-					pureWidth < MIN_WIDTH ||
-					pureWidth > MAX_WIDTH ||
-					pureHeight < MIN_WIDTH ||
-					pureHeight > MAX_WIDTH
-				) {
-					errorMessage = "Invalid size";
-				} else if (coloredRatio < 0.7) {
-					errorMessage = "Low color ratio";
-				} else if (/-wall[0-9]*.png/.test(imgUrl)) {
-					errorMessage = "Wall";
-				} else if (
-					/day-road[0-9]*.png/.test(imgUrl) &&
-					!/day-road9.png/.test(imgUrl)
-				) {
-					errorMessage = "Road";
-				}
+				const errorMessage = validate({
+					pureWidth,
+					pureHeight,
+					coloredRatio,
+					imgUrl,
+				});
 				if (errorMessage) {
 					$("<div>").appendTo(dd).text(errorMessage).css({
 						color: "red",

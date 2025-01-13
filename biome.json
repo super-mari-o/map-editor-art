@@ -19,15 +19,7 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true,
-			"nursery": {
-				"useSortedClasses": "error"
-			},
-			"correctness": {
-				"noUnusedImports": "error",
-				"noUnusedVariables": "error",
-				"noUndeclaredVariables": "error"
-			}
+			"all": true
 		}
 	},
 	"javascript": {
