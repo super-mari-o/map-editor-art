@@ -50,9 +50,10 @@ const calcRepresentativeColor = ({ rgbaArray }) => {
 		const [r, g, b, a] = rgbaArray.subarray(i, i + 4);
 		if (a > 0) {
 			coloredCount++;
-			redSum += r;
-			greenSum += g;
-			blueSum += b;
+			const opacity = a / 255;
+			redSum += r * opacity;
+			greenSum += g * opacity;
+			blueSum += b * opacity;
 		}
 	}
 	return `#${[
