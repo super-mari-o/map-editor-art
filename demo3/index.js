@@ -41,7 +41,7 @@ const regExpId = /[0-9]+(_[0-9]+)?/;
 			const y = Math.floor(i / 4 / img.width);
 			const [r, g, b] = data.subarray(i, i + 3);
 			const closest = calcClosestColor(r, g, b, type);
-			if (closest !== "background") {
+			if (closest !== null && closest !== "background") {
 				// !b=[ID]:[X]:[Y]:[Rotation]
 				output += `!b=${closest.match(regExpId)[0].split("_").join(":")}:${x}:${y}:0`;
 			}
