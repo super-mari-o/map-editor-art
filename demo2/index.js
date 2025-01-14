@@ -56,13 +56,13 @@ const calcRepresentativeColor = ({ rgbaArray }) => {
 			blueSum += b * opacity;
 		}
 	}
-	return `#${[
+	return [
 		redSum / coloredCount,
 		greenSum / coloredCount,
 		blueSum / coloredCount,
 	]
 		.map((v) => (v | 0).toString(16).padStart(2, "0"))
-		.join("")}`;
+		.join("");
 };
 const regExpWallPng = /-wall[0-9]*.png/;
 const regExpRoadPng = /day-road[0-9]*.png/;
@@ -87,6 +87,14 @@ const validate = ({ pureWidth, pureHeight, coloredRatio, imgUrl }) => {
 	}
 	return errorMessage;
 };
+const color2YmlKey = new Map();
+$("#output_button").on("click", () => {
+	$("#output_yml").text(
+		[...color2YmlKey]
+			.map(([color, ymlKey]) => `${color}: ${ymlKey}`)
+			.join("\n"),
+	);
+});
 (async () => {
 	const res = await fetch(
 		"https://super-mari-o.github.io/map-editor-art/data/map-editor.yml",
@@ -100,6 +108,7 @@ const validate = ({ pureWidth, pureHeight, coloredRatio, imgUrl }) => {
 		.trim()
 		.split("\n")
 		.map((v) => v.split(": "));
+	let loadCount = 0;
 	for (const [ymlKey, imgUrl] of ymlArray) {
 		$("<dt>").appendTo(demo_holder).text(ymlKey);
 		const dd = $("<dd>").appendTo(demo_holder);
@@ -153,12 +162,32 @@ const validate = ({ pureWidth, pureHeight, coloredRatio, imgUrl }) => {
 						"background-color": "pink",
 					});
 				} else {
+					if (color2YmlKey.has(representativeColor)) {
+						dd.append(
+							$("<div>")
+								.text(
+									`Duplicate color: ${color2YmlKey.get(representativeColor)}`,
+								)
+								.css({
+									color: "red",
+									"font-weight": "bold",
+									"background-color": "pink",
+								}),
+						);
+					} else {
+						color2YmlKey.set(representativeColor, ymlKey);
+					}
 					dd.append(img);
-					$("<input>").appendTo(dd).attr({
-						type: "color",
-						value: representativeColor,
-					});
+					$("<input>")
+						.appendTo(dd)
+						.attr({
+							type: "color",
+							value: `#${representativeColor}`,
+						});
 				}
+				loadCount++;
+				const progress = (loadCount / ymlArray.length) * 100;
+				$("#demo_progress").val(progress);
 			},
 		});
 	}
