@@ -5,10 +5,26 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Devast.io MAP-EDITOR Assets DEMO</title>
 		<meta name="description" content="DEMO DEMO DEMO" />
+		<style>
+			#error_message {
+				color: red;
+				background-color: pink;
+			}
+		</style>
 	</head>
 	<body>
 		<h1>Devast.io MAP-EDITOR Assets DEMO</h1>
-		<dl id="demo_holder"></dl>
+		<input id="input_file" type="file" accept="image/*" />
+		<img id="input_img" />
+		<select id="select_type">
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+		</select>
+		<button id="output_button">output Devast.io MAP-EDITO code</button>
+		<div id="error_message"></div>
+		<textarea id="output_textarea"></textarea>
 	</body>
 	<script
 		src="https://code.jquery.com/jquery-3.7.1.slim.min.js"

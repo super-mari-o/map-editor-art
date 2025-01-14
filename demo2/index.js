@@ -1,5 +1,4 @@
-const { $, demo_holder } = window;
-$(demo_holder).empty();
+const { $ } = window;
 const measurePureSize = ({ rgbaArray, width, height }) => {
 	let minX = width;
 	let maxX = 0;
@@ -42,25 +41,15 @@ const calcColoredRatio = ({ rgbaArray }) => {
 	return coloredCount / (coloredCount + colorlessCount);
 };
 const calcRepresentativeColor = ({ rgbaArray }) => {
-	let coloredCount = 0;
-	let redSum = 0;
-	let greenSum = 0;
-	let blueSum = 0;
+	const sum = [0, 0, 0];
 	for (let i = 0; i < rgbaArray.length; i += 4) {
-		const [r, g, b, a] = rgbaArray.subarray(i, i + 4);
-		if (a > 0) {
-			coloredCount++;
-			const opacity = a / 255;
-			redSum += r * opacity;
-			greenSum += g * opacity;
-			blueSum += b * opacity;
-		}
+		const rgb = rgbaArray.subarray(i, i + 3);
+		sum[0] += rgb[0];
+		sum[1] += rgb[1];
+		sum[2] += rgb[2];
 	}
-	return [
-		redSum / coloredCount,
-		greenSum / coloredCount,
-		blueSum / coloredCount,
-	]
+	return sum
+		.map((v) => Math.round(v / (rgbaArray.length / 4)))
 		.map((v) => (v | 0).toString(16).padStart(2, "0"))
 		.join("");
 };
@@ -87,9 +76,11 @@ const validate = ({ pureWidth, pureHeight, coloredRatio, imgUrl }) => {
 	}
 	return errorMessage;
 };
+const background = "46664d";
 const color2YmlKey = new Map();
 $("#output_button").on("click", () => {
-	$("#output_yml").text(
+	color2YmlKey.set(background, "background");
+	$("#output_textarea").text(
 		[...color2YmlKey]
 			.map(([color, ymlKey]) => `${color}: ${ymlKey}`)
 			.join("\n"),
@@ -110,8 +101,8 @@ $("#output_button").on("click", () => {
 		.map((v) => v.split(": "));
 	let loadCount = 0;
 	for (const [ymlKey, imgUrl] of ymlArray) {
-		$("<dt>").appendTo(demo_holder).text(ymlKey);
-		const dd = $("<dd>").appendTo(demo_holder);
+		$("<dt>").appendTo($("#demo_holder")).text(ymlKey);
+		const dd = $("<dd>").appendTo($("#demo_holder"));
 		const img = Object.assign(new Image(), {
 			src: imgUrl,
 			alt: ymlKey,
@@ -137,8 +128,16 @@ $("#output_button").on("click", () => {
 				const coloredRatio = calcColoredRatio({
 					rgbaArray: imageData2.data,
 				});
+				const ctx3 = Object.assign(document.createElement("canvas"), {
+					width: pureWidth,
+					height: pureHeight,
+				}).getContext("2d");
+				ctx3.fillStyle = `#${background}`;
+				ctx3.fillRect(0, 0, pureWidth, pureHeight);
+				ctx3.drawImage(img, -offsetX, -offsetY);
+				const imageData3 = ctx3.getImageData(0, 0, pureWidth, pureHeight);
 				const representativeColor = calcRepresentativeColor({
-					rgbaArray: imageData2.data,
+					rgbaArray: imageData3.data,
 				});
 				$("<div>").appendTo(dd).text(`Size: ${pureWidth}x${pureHeight}`).css({
 					color: "blue",
