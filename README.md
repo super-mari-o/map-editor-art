@@ -17,6 +17,7 @@ Using an algorithm to solve this problem, the goal is to create pixel art design
 
 - [Demo1](https://super-mari-o.github.io/map-editor-art/demo1/)
 - [Demo2](https://super-mari-o.github.io/map-editor-art/demo2/)
+- [Demo3](https://super-mari-o.github.io/map-editor-art/demo3/)
 
 ## Technologies Used
 
