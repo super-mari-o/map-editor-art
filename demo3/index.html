@@ -14,17 +14,28 @@
 	</head>
 	<body>
 		<h1>Devast.io MAP-EDITOR Assets DEMO</h1>
-		<input id="input_file" type="file" accept="image/*" />
-		<img id="input_img" />
-		<select id="select_type">
-			<option value="0">0</option>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-		</select>
-		<button id="output_button">output Devast.io MAP-EDITO code</button>
+		<div>
+			<input id="input_file" type="file" accept="image/*" />
+		</div>
+		<div>
+			<img id="input_img" />
+		</div>
+		<div>
+			<label for="select_type">select type:</label>
+			<select id="select_type">
+				<option value="0">0</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</select>
+		</div>
+		<div>
+			<button id="output_button">output Devast.io MAP-EDITO code</button>
+		</div>
 		<div id="error_message"></div>
-		<textarea id="output_textarea"></textarea>
+		<div>
+			<textarea id="output_textarea"></textarea>
+		</div>
 	</body>
 	<script
 		src="https://code.jquery.com/jquery-3.7.1.slim.min.js"

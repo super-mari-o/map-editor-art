@@ -1,6 +1,6 @@
 import { diffColor } from "https://rpgen3.github.io/projector/mjs/diffColor.mjs";
 const res = await fetch(
-	"https://super-mari-o.github.io/map-editor-art/data/rgb2Tile.yml",
+	"https://super-mari-o.github.io/map-editor-art/data/rgb2tile.yml",
 );
 const str = await res.text();
 const ymlArray = str
