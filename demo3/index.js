@@ -36,7 +36,7 @@ const regExpId = /[0-9]+(_[0-9]+)?/;
 		ctx.drawImage(img, 0, 0);
 		const { data } = ctx.getImageData(0, 0, img.width, img.height);
 		let output = "";
-		for (let i = 0; i < data; i += 4) {
+		for (let i = 0; i < data.length; i += 4) {
 			const x = (i / 4) % img.width;
 			const y = Math.floor(i / 4 / img.width);
 			const [r, g, b] = data.subarray(i, i + 3);
